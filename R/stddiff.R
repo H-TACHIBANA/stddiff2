@@ -312,7 +312,7 @@ stdiff.table.rank <- function(res = res2){
             
             table1[["table.rank.uwt"]] <- table.uwt
             table1[["table.rank.wt"]] <- table.wt
-            return(table1)
       }
+      return(table1)
 }
 
