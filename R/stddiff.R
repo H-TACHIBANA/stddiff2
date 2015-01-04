@@ -258,17 +258,8 @@ stdiff.table.cat <- function(res = res2){
       return(table1)
 }
 
-
-
+      
 stdiff.table.rank <- function(res = res2){
-      table1 <- list()
-      val.cont <- res[["val.cont"]]
-      val.cat <- res[["val.cat"]]
-      val.ord <- res[["val.ord"]]
-      
-      table.rank.uwt <- data.frame(NULL)
-      
-      stdiff.table.rank <- function(res = res2){
             table1 <- list()
             val.cont <- res[["val.cont"]]
             val.cat <- res[["val.cat"]]
@@ -312,7 +303,7 @@ stdiff.table.rank <- function(res = res2){
             
             table1[["table.rank.uwt"]] <- table.uwt
             table1[["table.rank.wt"]] <- table.wt
-      }
+
       return(table1)
 }
 

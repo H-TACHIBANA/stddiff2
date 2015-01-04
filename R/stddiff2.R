@@ -259,59 +259,50 @@ stdiff.table.cat <- function(res = res2){
 }
 
 
-
 stdiff.table.rank <- function(res = res2){
       table1 <- list()
       val.cont <- res[["val.cont"]]
       val.cat <- res[["val.cat"]]
       val.ord <- res[["val.ord"]]
       
-      table.rank.uwt <- data.frame(NULL)
-      
-      stdiff.table.rank <- function(res = res2){
-            table1 <- list()
-            val.cont <- res[["val.cont"]]
-            val.cat <- res[["val.cat"]]
-            val.ord <- res[["val.ord"]]
-            
-            table.uwt <- data.frame(NULL)
-            for (i1 in val.ord){  
-                  table.uwt <- rbind(table.uwt, data.frame(variable = i1,
-                                                           treat.mean = as.character(signif(as.numeric(res[[i1]]["mean.treat1.rank.uwt"]), digits = 4)),
-                                                           treat.sd = as.character(signif(as.numeric(res[[i1]]["sd.treat1.rank.uwt"]), digits =4)),
-                                                           control.mean = as.character(signif(as.numeric(res[[i1]]["mean.treat0.rank.uwt"]), digits=4)),
-                                                           control.sd = as.character(signif(as.numeric(res[[i1]]["sd.treat0.rank.uwt"]), digits=4)),
-                                                           p.value = as.character(round(as.numeric(res[[i1]]["ttest.p.rank.uwt"]), digits = 3)),
-                                                           stddiff = as.character(round(as.numeric(res[[i1]]["stddiff.rank.uwt"]), digits = 3))
-                  ))
-            }
-            rownames(table.uwt) <- NULL
-            for (i2 in colnames(table.uwt)){
-                  table.uwt[,i2] <- as.character(table.uwt[,i2]) 
-            }
-            table.uwt$p.value[table.uwt$p.value == "0"] <- "<.001"
-            table.uwt$stddiff[table.uwt$stddiff == "0"] <- "<.001"
-            
-            table.wt <- data.frame(NULL)
-            for (i3 in val.ord){  
-                  table.wt <- rbind(table.wt, data.frame(variable = i3,
-                                                         treat.mean = as.character(signif(as.numeric(res[[i3]][["mean.treat1.rank.wt"]]), digits = 4)),
-                                                         treat.sd = as.character(signif(as.numeric(res[[i3]]["sd.treat1.rank.wt"]), digits =4)),
-                                                         control.mean = as.character(signif(as.numeric(res[[i3]]["mean.treat0.rank.wt"]), digits=4)),
-                                                         control.sd = as.character(signif(as.numeric(res[[i3]]["sd.treat0.rank.wt"]), digits=4)),
-                                                         p.value = as.character(round(as.numeric(res[[i3]]["ttest.p.rank.wt"]), digits = 3)),
-                                                         stddiff = as.character(round(as.numeric(res[[i3]]["stddiff.rank.wt"]), digits = 3))
-                  ))
-            }
-            rownames(table.wt) <- NULL
-            for (i4 in colnames(table.wt)){
-                  table.wt[,i4] <- as.character(table.wt[,i4]) 
-            }
-            table.wt$p.value[table.wt$p.value == "0"] <- "<.001"
-            table.wt$stddiff[table.wt$stddiff == "0"] <- "<.001"
-            
-            table1[["table.rank.uwt"]] <- table.uwt
-            table1[["table.rank.wt"]] <- table.wt
+      table.uwt <- data.frame(NULL)
+      for (i1 in val.ord){  
+            table.uwt <- rbind(table.uwt, data.frame(variable = i1,
+                                                     treat.mean = as.character(signif(as.numeric(res[[i1]]["mean.treat1.rank.uwt"]), digits = 4)),
+                                                     treat.sd = as.character(signif(as.numeric(res[[i1]]["sd.treat1.rank.uwt"]), digits =4)),
+                                                     control.mean = as.character(signif(as.numeric(res[[i1]]["mean.treat0.rank.uwt"]), digits=4)),
+                                                     control.sd = as.character(signif(as.numeric(res[[i1]]["sd.treat0.rank.uwt"]), digits=4)),
+                                                     p.value = as.character(round(as.numeric(res[[i1]]["ttest.p.rank.uwt"]), digits = 3)),
+                                                     stddiff = as.character(round(as.numeric(res[[i1]]["stddiff.rank.uwt"]), digits = 3))
+            ))
       }
+      rownames(table.uwt) <- NULL
+      for (i2 in colnames(table.uwt)){
+            table.uwt[,i2] <- as.character(table.uwt[,i2]) 
+      }
+      table.uwt$p.value[table.uwt$p.value == "0"] <- "<.001"
+      table.uwt$stddiff[table.uwt$stddiff == "0"] <- "<.001"
+      
+      table.wt <- data.frame(NULL)
+      for (i3 in val.ord){  
+            table.wt <- rbind(table.wt, data.frame(variable = i3,
+                                                   treat.mean = as.character(signif(as.numeric(res[[i3]][["mean.treat1.rank.wt"]]), digits = 4)),
+                                                   treat.sd = as.character(signif(as.numeric(res[[i3]]["sd.treat1.rank.wt"]), digits =4)),
+                                                   control.mean = as.character(signif(as.numeric(res[[i3]]["mean.treat0.rank.wt"]), digits=4)),
+                                                   control.sd = as.character(signif(as.numeric(res[[i3]]["sd.treat0.rank.wt"]), digits=4)),
+                                                   p.value = as.character(round(as.numeric(res[[i3]]["ttest.p.rank.wt"]), digits = 3)),
+                                                   stddiff = as.character(round(as.numeric(res[[i3]]["stddiff.rank.wt"]), digits = 3))
+            ))
+      }
+      rownames(table.wt) <- NULL
+      for (i4 in colnames(table.wt)){
+            table.wt[,i4] <- as.character(table.wt[,i4]) 
+      }
+      table.wt$p.value[table.wt$p.value == "0"] <- "<.001"
+      table.wt$stddiff[table.wt$stddiff == "0"] <- "<.001"
+      
+      table1[["table.rank.uwt"]] <- table.uwt
+      table1[["table.rank.wt"]] <- table.wt
+      
       return(table1)
 }

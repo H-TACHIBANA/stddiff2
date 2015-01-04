@@ -84,23 +84,23 @@ summary(fit)</code></pre>
 ## 
 ## Deviance Residuals: 
 ##      Min        1Q    Median        3Q       Max  
-## -0.92966  -0.41900  -0.08147   0.42507   0.83316  
+## -0.82539  -0.44780  -0.08672   0.45581   0.93676  
 ## 
 ## Coefficients:
 ##               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  0.2065520  0.0812889   2.541   0.0112 *  
-## age          0.0009587  0.0014123   0.679   0.4974    
-## crp          0.0240410  0.0026251   9.158  &lt; 2e-16 ***
-## severe       0.1859881  0.0301972   6.159 1.06e-09 ***
-## score       -0.0374867  0.0086021  -4.358 1.45e-05 ***
+## (Intercept)  2.706e-01  8.651e-02   3.128  0.00181 ** 
+## age         -9.349e-05  1.501e-03  -0.062  0.95033    
+## crp          2.355e-02  2.654e-03   8.873  &lt; 2e-16 ***
+## severe       1.231e-01  3.060e-02   4.024 6.14e-05 ***
+## score       -3.358e-02  8.783e-03  -3.824  0.00014 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## (Dispersion parameter for gaussian family taken to be 0.2170587)
+## (Dispersion parameter for gaussian family taken to be 0.2268028)
 ## 
 ##     Null deviance: 250.00  on 999  degrees of freedom
-## Residual deviance: 215.97  on 995  degrees of freedom
-## AIC: 1317.3
+## Residual deviance: 225.67  on 995  degrees of freedom
+## AIC: 1361.2
 ## 
 ## Number of Fisher Scoring iterations: 2</code></pre>
 <pre class="r"><code>ps &lt;- predict(fit, type = &quot;response&quot;)
@@ -130,81 +130,41 @@ tbl.3 &lt;- stdiff.table.rank(res)
 tbl.1</code></pre>
 <pre><code>## $table.cont.uwt
 ##   variable treat.mean treat.sd control.mean control.sd p.value stddiff
-## 1      age      50.14    10.67        49.83      10.22   0.638    0.03
-## 2      crp      12.91    5.729        9.633      5.047   &lt;.001   0.607
+## 1      age      50.34    10.04         50.2      10.06   0.834   0.013
+## 2      crp      13.11    6.012        10.09      4.882   &lt;.001   0.552
 ## 
 ## $table.cont.wt
 ##   variable treat.mean treat.sd control.mean control.sd p.value stddiff
-## 1      age       49.7    10.87        49.52      10.08    0.81   0.017
-## 2      crp      11.13    5.968        11.24       5.38   0.798   -0.02</code></pre>
+## 1      age      50.02    10.14        50.31      10.27     0.7  -0.028
+## 2      crp      10.98    6.564         11.2      4.952   0.648  -0.039</code></pre>
 <pre class="r"><code>tbl.2</code></pre>
 <pre><code>## $table.cat.uwt
 ##   variable categoly number.treat1 percent.treat1 number.treat0
 ## 1   severe                                                    
-## 2                 0           247           49.4           351
-## 3                 1           253           50.6           149
+## 2                 0           263           52.6           320
+## 3                 1           237           47.4           180
 ##   percent.treat0 p.value stddiff
-## 1                  &lt;.001   0.434
-## 2           70.2                
-## 3           29.8                
+## 1                  &lt;.001   0.233
+## 2             64                
+## 3             36                
 ## 
 ## $table.cat.wt
 ##   variable categoly number.treat1 percent.treat1 number.treat0
 ## 1   severe                                                    
-## 2                 0         298.6           59.7         293.5
-## 3                 1         201.4           40.3         206.5
+## 2                 0         297.6           59.5           297
+## 3                 1         202.4           40.5           203
 ##   percent.treat0 p.value stddiff
-## 1                  0.777   0.021
-## 2           58.7                
-## 3           41.3</code></pre>
+## 1                  0.974   0.002
+## 2           59.4                
+## 3           40.6</code></pre>
 <pre class="r"><code>tbl.3</code></pre>
-<pre><code>## function(res = res2){
-##             table1 &lt;- list()
-##             val.cont &lt;- res[[&quot;val.cont&quot;]]
-##             val.cat &lt;- res[[&quot;val.cat&quot;]]
-##             val.ord &lt;- res[[&quot;val.ord&quot;]]
-##             
-##             table.uwt &lt;- data.frame(NULL)
-##             for (i1 in val.ord){  
-##                   table.uwt &lt;- rbind(table.uwt, data.frame(variable = i1,
-##                                                            treat.mean = as.character(signif(as.numeric(res[[i1]][&quot;mean.treat1.rank.uwt&quot;]), digits = 4)),
-##                                                            treat.sd = as.character(signif(as.numeric(res[[i1]][&quot;sd.treat1.rank.uwt&quot;]), digits =4)),
-##                                                            control.mean = as.character(signif(as.numeric(res[[i1]][&quot;mean.treat0.rank.uwt&quot;]), digits=4)),
-##                                                            control.sd = as.character(signif(as.numeric(res[[i1]][&quot;sd.treat0.rank.uwt&quot;]), digits=4)),
-##                                                            p.value = as.character(round(as.numeric(res[[i1]][&quot;ttest.p.rank.uwt&quot;]), digits = 3)),
-##                                                            stddiff = as.character(round(as.numeric(res[[i1]][&quot;stddiff.rank.uwt&quot;]), digits = 3))
-##                   ))
-##             }
-##             rownames(table.uwt) &lt;- NULL
-##             for (i2 in colnames(table.uwt)){
-##                   table.uwt[,i2] &lt;- as.character(table.uwt[,i2]) 
-##             }
-##             table.uwt$p.value[table.uwt$p.value == &quot;0&quot;] &lt;- &quot;&lt;.001&quot;
-##             table.uwt$stddiff[table.uwt$stddiff == &quot;0&quot;] &lt;- &quot;&lt;.001&quot;
-##             
-##             table.wt &lt;- data.frame(NULL)
-##             for (i3 in val.ord){  
-##                   table.wt &lt;- rbind(table.wt, data.frame(variable = i3,
-##                                                          treat.mean = as.character(signif(as.numeric(res[[i3]][[&quot;mean.treat1.rank.wt&quot;]]), digits = 4)),
-##                                                          treat.sd = as.character(signif(as.numeric(res[[i3]][&quot;sd.treat1.rank.wt&quot;]), digits =4)),
-##                                                          control.mean = as.character(signif(as.numeric(res[[i3]][&quot;mean.treat0.rank.wt&quot;]), digits=4)),
-##                                                          control.sd = as.character(signif(as.numeric(res[[i3]][&quot;sd.treat0.rank.wt&quot;]), digits=4)),
-##                                                          p.value = as.character(round(as.numeric(res[[i3]][&quot;ttest.p.rank.wt&quot;]), digits = 3)),
-##                                                          stddiff = as.character(round(as.numeric(res[[i3]][&quot;stddiff.rank.wt&quot;]), digits = 3))
-##                   ))
-##             }
-##             rownames(table.wt) &lt;- NULL
-##             for (i4 in colnames(table.wt)){
-##                   table.wt[,i4] &lt;- as.character(table.wt[,i4]) 
-##             }
-##             table.wt$p.value[table.wt$p.value == &quot;0&quot;] &lt;- &quot;&lt;.001&quot;
-##             table.wt$stddiff[table.wt$stddiff == &quot;0&quot;] &lt;- &quot;&lt;.001&quot;
-##             
-##             table1[[&quot;table.rank.uwt&quot;]] &lt;- table.uwt
-##             table1[[&quot;table.rank.wt&quot;]] &lt;- table.wt
-##             return(table1)
-##       }
-## &lt;environment: 0x0000000007409040&gt;</code></pre>
+<pre><code>## $table.rank.uwt
+##   variable treat.mean treat.sd control.mean control.sd p.value stddiff
+## 1    score      471.1    287.8        529.9      278.3   0.001  -0.208
+## 
+## $table.rank.wt
+##   variable treat.mean treat.sd control.mean control.sd p.value stddiff
+## 1    score      505.3    286.6        500.9      280.2   0.867   0.015</code></pre>
 
 
 </div>
